@@ -2,6 +2,7 @@ version: "3.9"
 services:
   gateway:
     image: gateway
+    build: ./GatewayLab2/GatewayLab2/
     ports:
       - "8080:80"
     environment:
@@ -11,6 +12,7 @@ services:
 
   reservation:
     image: reservation
+    build: ./ReservationService2Lab/ReservationService2Lab/
     ports:
       - "8070:80"
     environment:
@@ -22,6 +24,7 @@ services:
 
   payment:
     image: payment
+    build: ./PaymentServiceLab2/PaymentServiceLab2/
     ports:
       - "8060:80"
     environment:
@@ -33,6 +36,7 @@ services:
 
   loyalty:
     image: loyalty
+    build: ./LoyaltyServiceLab2/LoyaltyServiceLab2/
     ports:
       - "8050:80"
     environment:
