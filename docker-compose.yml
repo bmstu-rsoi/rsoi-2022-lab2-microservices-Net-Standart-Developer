@@ -1,8 +1,50 @@
-version: "3"
+version: "3.9"
 services:
-  postgres:
+  gateway:
+    image: gateway
+    ports:
+      - "8080:80"
+    environment:
+      - RESERVATION=reservation:80
+      - PAYMENT=payment:80
+      - LOYALTY=loyalty:80
+
+  reservation:
+    image: reservation
+    ports:
+      - "8070:80"
+    environment:
+      - DBHOST=postgres2
+      - DBPORT=5432
+      - DATABASE=reservations
+      - USERNAME=program
+      - PASSWORD=test
+
+  payment:
+    image: payment
+    ports:
+      - "8060:80"
+    environment:
+      - DBHOST=postgres2
+      - DBPORT=5432
+      - DATABASE=payments
+      - USERNAME=program
+      - PASSWORD=test
+
+  loyalty:
+    image: loyalty
+    ports:
+      - "8050:80"
+    environment:
+      - DBHOST=postgres2
+      - DBPORT=5432
+      - DATABASE=loyalties
+      - USERNAME=program
+      - PASSWORD=test
+
+  postgres2:
     image: library/postgres:13
-    container_name: postgres
+    container_name: postgres2
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
@@ -12,9 +54,7 @@ services:
       - db-data:/var/lib/postgresql/data
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
-      - "5432:5432"
-
-# TODO добавить сервисы
+      - "54321:5432"
 
 volumes:
   db-data:
